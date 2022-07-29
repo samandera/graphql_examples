@@ -1,0 +1,38 @@
+# import * from "./product.graphql"
+# import * from "./user.graphql"
+
+directive @auth(roles: [Role!]!) on FIELD_DEFINITION
+directive @overwriteByParent on FIELD_DEFINITION
+scalar Email
+scalar Url
+
+enum Role {
+  ADMIN, AFFILIATE, EMPLOYER, CUSTOMER
+}
+
+input IdWhereInput {
+  id: ID!
+}
+
+input IdWhereOptionalInput {
+  id: ID
+}
+
+type Query {
+  affiliate(where: IdWhereInput!): Affiliate!
+  getProduct(where: IdWhereOptionalInput): Product!
+  userUnion(where: UserInput!): User!
+  userByRole(where: UserInput!): UserByRole
+}
+
+type Mutation {
+  logIn(where: EmailWhereInput!): UserByRole!
+  createEmpolyee(data: EmployeeCreateInput!, where: CreateEmployeeWhereInput): Employee!
+  updateProductPrice(data: UpdateProductPriceInput!, where: IdWhereInput!): Product!
+  updateProductDescription(data: UpdateProductDescriptionInput!, where: IdWhereInput!): Product!
+  uploadProductPhotoPhoto(data: Upload!, where: IdWhereInput!): Product!
+}
+
+type Subscription {
+  uploadProductPhotoProgress(where: IdWhereInput!): PhotoProgress
+}

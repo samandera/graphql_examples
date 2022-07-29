@@ -1,0 +1,48 @@
+interface User {
+  email: Email!
+  id: ID!
+  role: Role!
+}
+
+type Affiliate implements User {
+  email: Email!
+  id: ID!
+  employers: [Employee!]!
+  role: Role!
+  companyAddress: String!
+  homepage: Url
+  products: [Product!]!
+}
+
+type Customer implements User {
+  email: Email!
+  id: ID!
+  role: Role!
+  homeAddress: String!
+}
+
+type Employee {
+  id: ID!
+  firstName: String!
+  lastName: String!
+}
+
+union UserByRole = Affiliate | Customer
+
+input UserInput {
+  id: ID
+  email: Email
+}
+
+input EmployeeCreateInput {
+  firstName: String!
+  lastName: String!
+}
+
+input CreateEmployeeWhereInput {
+  ownerId: ID
+}
+
+input EmailWhereInput {
+  email: Email!
+}

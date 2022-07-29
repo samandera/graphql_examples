@@ -1,0 +1,39 @@
+scalar Upload
+
+enum Currency {
+  EUR, PLN
+}
+
+input UpdateProductPriceInput {
+  price: Int!
+}
+
+input UpdateProductDescriptionInput {
+  description: String!
+}
+
+type Price {
+  value: Int!
+  currency: Currency!
+}
+
+type PhotoProgress {
+  complete: Boolean!
+  photoIdentification: String!
+  progress: Int!
+  productId: Int!
+}
+
+type File {
+  id: Int!
+  path: String!
+}
+
+type Product {
+  id: Int!
+  description: String!
+  name: String!
+  image: File
+  displayPrice: Price! @overwriteByParent
+  originalPrice: Price! @auth(roles: [ADMIN, AFFILIATE, EMPLOYER]) @overwriteByParent
+}
